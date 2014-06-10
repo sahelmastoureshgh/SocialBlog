@@ -9,6 +9,7 @@
   "author": "Sahel Mastoureshgh <sahel.mastoureshgh@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "color": "^0.6.0",
     "consolidate": "^0.10.0",
     "express": "^4.3.1",
