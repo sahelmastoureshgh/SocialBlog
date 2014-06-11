@@ -2,8 +2,9 @@ var mongoose = require('mongoose')
   , user = mongoose.model('User')
   
  
-//create a new user
-/**exports.create=function (req,res){
+//create a new user and get sign up information
+exports.handleSignup=function (req,res){
+	res.send("Hello");
 	var myuser=new user(req.body);
 	myuser.save(function(err){
 		if (err){
@@ -11,11 +12,12 @@ var mongoose = require('mongoose')
 		}
 	})
 	
-};**/
+};
 
-// show signup page
+// signup page
 exports.signup = function (req, res) {
-  res.render('signup')
+  res.render('signup',{user: new user() })
+
  
 }
 

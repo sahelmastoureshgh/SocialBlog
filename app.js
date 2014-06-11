@@ -1,21 +1,38 @@
 var express = require('express')
     mongoose = require('mongoose'),
+	bodyParser= require('body-parser'),
+	cookieParser=require('cookie-parser'),
 	cons=require('consolidate'),
-	routes = require('./routes'); // Routes for our application
+	fs = require('fs');
 	
 
 mongoose.connect('mongodb://localhost', function(err) {
 	if (err) throw err;
+	
+	//register models
+	//model need to be registered before route
+	var models_path = __dirname + '/model'
+	fs.readdirSync(models_path).forEach(function (file) {
+	  if (~file.indexOf('.js')) require(models_path + '/' + file)
+	})
 
-	var app = express();
+    // create web server 
+	var app = express()
+
 	
 	//register template swig 
 	app.engine('html',cons.swig);
 	app.set('view engine', 'html');
 	app.set('views',__dirname + "/view");
 	
+    // middleware to populate 'req.cookies' so we can access cookies
+    app.use(cookieParser());
+    // middleware to populate 'req.body' so we can access POST variables
+    app.use(bodyParser());
+
+	
 	// call routes
-	routes(app);
+	require('./routes')(app)
 
 	// listening to the port
 	var port = 3000

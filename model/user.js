@@ -23,7 +23,7 @@ userSchema
 
 // methods to check password, create hashed password, create new user
 
-UserSchema.methods = {
+userSchema.methods = {
 
   /**
    * Authenticate - check if the passwords are the same
@@ -60,4 +60,4 @@ UserSchema.methods = {
 
 }
 
-module.exports =mongoose.model('User', userSchema)   
+mongoose.model('User', userSchema)   
