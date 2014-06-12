@@ -57,6 +57,18 @@ userSchema.methods = {
     }
   },
 
+  /**
+   Create new User
+  **/
+  addUser :function()
+  {
+    this.save(function(err){
+      if (err){
+        console.log('Error on save')
+      }
+    })
+  } 
+
 
 }
 

@@ -6,11 +6,13 @@ var mongoose = require('mongoose')
 exports.handleSignup=function (req,res){
 	res.send("Hello");
 	var myuser=new user(req.body);
-	myuser.save(function(err){
-		if (err){
-			console.log('Error on save')
-		}
-	})
+	myuser.addUser( function(err, user) {
+
+                if (err) {
+                	console.log("error");
+                  
+                }
+    });
 	
 };
 
