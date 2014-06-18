@@ -9,6 +9,10 @@ var userSchema=new Schema({
     hashed_password: { type: String, default: '' }
 })
 
+
+
+
+
 // virtual method for get and set password
 userSchema
   .virtual('password')
@@ -21,19 +25,49 @@ userSchema
 
 
 
+//validations for signing up
+
+  userSchema.path('email').validate(function (email) {
+  
+	   var EMAIL_RE = /^[\S]+@[\S]+\.[\S]+$/;  
+	   return (EMAIL_RE.test(email)); 
+
+ 
+  }, 'Please enter valid Email')
+  
+// checking to see if the user already exists
+  userSchema.path('email').validate(function (email, fn) {
+    var User = mongoose.model('User');
+    // Check only when it is a new user or when email field is modified
+    if (this.isNew || this.isModified('email')) {
+      User.find({ email: email }).exec(function (err, users) {
+        fn(!err && users.length === 0)
+      })
+    } else fn(true)
+  }, 'Email already exists')
+
+
+  userSchema.path('hashed_password').validate(function (hashed_password){ 
+      return hashed_password.length;
+
+  }, 'Password cannot be blank')
+  
+  
+  
+
 // methods to check password, create hashed password, create new user
 
 userSchema.methods = {
 
   /**
-   * Authenticate - check if the passwords are the same
+   * validPassword - check if the passwords are the same
    * @param {String} plainText
    * @return {Boolean}
    * @api public
    */
 
-  authenticate: function (plainText) {
-    return this.encryptPassword(plainText) === this.hashed_password
+  validPassword: function (plainText){ 
+    return bcrypt.compareSync(plainText, this.hashed_password);
   },
 
 
