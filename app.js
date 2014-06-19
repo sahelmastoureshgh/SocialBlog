@@ -3,6 +3,10 @@ var express = require('express')
 	bodyParser= require('body-parser'),
 	cookieParser=require('cookie-parser'),
 	cons=require('consolidate'),
+	session = require('express-session'),
+	mongoStore = require('connect-mongo')(session),
+	flash = require('connect-flash'),
+	passport = require('passport'),
 	fs = require('fs');
 	
 
@@ -15,6 +19,8 @@ mongoose.connect('mongodb://localhost', function(err) {
 	fs.readdirSync(models_path).forEach(function (file) {
 	  if (~file.indexOf('.js')) require(models_path + '/' + file)
 	})
+	// passport config
+	require('./config/passport')(passport)
 
     // create web server 
 	var app = express()
@@ -29,10 +35,27 @@ mongoose.connect('mongodb://localhost', function(err) {
     app.use(cookieParser());
     // middleware to populate 'req.body' so we can access POST variables
     app.use(bodyParser());
+   
+
+    // express/mongo session storage
+    app.use(session({
+      secret: "something",
+      store: new mongoStore({
+        db: mongoose.connection.db,
+        collection : 'sessions'
+      })
+    }))
+
+    // use passport session
+    app.use(passport.initialize())
+    app.use(passport.session())
+
+    // connect flash for flash messages - should be declared after sessions
+    app.use(flash())
 
 	
 	// call routes
-	require('./routes')(app)
+	require('./routes')(app, passport)
 
 	// listening to the port
 	var port = 3000

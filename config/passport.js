@@ -19,18 +19,20 @@ module.exports = function (passport, config) {
 
   // use local strategy
   passport.use(new LocalStrategy({
-      usernameField: 'email',
-      passwordField: 'password', 
-	  passReqToCallback : true // allows us to pass back the entire request to the callback
-	  
-    },
-    function(req,email, password, done) {
-		userController.handleSignup(req, function (err, user) {
-           if (err) {
-			    return done(err) 
-			}
- 
-            return done(null, user)
-      })
-    }
-  ))
+  		usernameField: 'email',
+  		passwordField: 'password',
+  		passReqToCallback: true // allows us to pass back the entire request to the callback
+
+  	},
+  	function(req, email, password, done) {
+  		userController.handleSignup(req, function(err, user) {
+  			if (err) {
+  				return done(err)
+  			}
+
+  			return done(null, user)
+  		})
+  	}
+  ));
+
+  }
