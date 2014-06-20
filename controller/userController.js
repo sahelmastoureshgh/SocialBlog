@@ -25,31 +25,51 @@ function validateSignup( password, email) {
  /**check if email is valid in terms of syntax
    check if email address exist in the database 
    create a new user and get sign up information
+   call done to go with this new user to create session in passport
  **/
-exports.handleSignup=function (req,res){
-    "use strict";
-     var email = req.body.email
-     var password = req.body.password
+exports.handleSignup = function(req,done) {
+	"use strict";
+	var email = req.body.email
+	var password = req.body.password
+	// wont fire untill data is sent back
+	process.nextTick(function() {
+        // just validate syntax for input for email
+		if (validateSignup(password, email)) {
 
-	 if (validateSignup(password, email)) {
+			//res.send("Hello");
+			// create new user 
+			var myuser = new user(req.body);
 
- 	    res.send("Hello");
- 	    var myuser = new user(req.body);
+			myuser.save(function(err,user){
+               if (err){
+                 console.log('Error on save')
+               }
+			   done(null, user);
+            })
+		
 
- 	    myuser.addUser(function(err, user) {
- 		   if (err) {
- 		   	console.log("error");
+		}
+	});
 
- 		    }
- 	   });
-
-    }
 
 };
 
 // signup page
 exports.signup = function (req, res) {
   res.render('signup',{user: new user() })
+
+ 
+}
+
+// welcome page
+exports.welcome = function (req, res) {
+  res.send("Welcome");
+
+ 
+}
+// signup page
+exports.error = function (req, res) {
+   res.send("Error");
 
  
 }
