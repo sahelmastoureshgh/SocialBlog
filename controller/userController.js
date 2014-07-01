@@ -54,6 +54,7 @@ exports.handleSignup = function(req,done) {
 
 };
 
+
 // signup page
 exports.signup = function (req, res) {
   res.render('signup',{user: new user() })
@@ -63,7 +64,7 @@ exports.signup = function (req, res) {
 
 // welcome page
 exports.welcome = function (req, res) {
-  res.send("Welcome");
+  res.render('login');
 
  
 }

@@ -37,3 +37,25 @@ module.exports = function (passport, config) {
   ));
 
   }
+  
+  
+  // use local strategy handle login
+  passport.use(new LocalStrategy({
+      usernameField: 'email',
+      passwordField: 'password',
+	  passReqToCallback: true // allows us to pass back the entire request to the callback
+	  
+    },
+    function(email, password, done) {
+      User.findOne({ email: email }, function (err, user) {
+        if (err) { return done(err) }
+        if (!user) {
+          return done(null, false, { message: 'Unknown user' })
+        }
+        if (!user.validPassword(password)) {
+          return done(null, false, { message: 'Invalid password' })
+        }
+        return done(null, user)
+      })
+    }
+  ))
