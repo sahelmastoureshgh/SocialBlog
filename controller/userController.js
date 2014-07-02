@@ -63,8 +63,9 @@ exports.signup = function (req, res) {
 }
 
 // welcome page
-exports.welcome = function (req, res) {
-  res.render('login');
+exports.login = function (req, res) {
+	console.log(req.session);
+    res.render('login');
 
  
 }

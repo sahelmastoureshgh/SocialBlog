@@ -7,7 +7,13 @@ var mongoose = require('mongoose')
 
 module.exports = function (passport, config) {
 
-  // serialize sessions
+  // serialize user for sessions
+ /**
+   After creating session in db
+   We can access to session by
+   req.session and we can access to user id with req.session.passport.id
+   or with req.user.id
+ **/
   passport.serializeUser(function(user, done) {
     done(null, user.id)
   })
@@ -19,7 +25,7 @@ module.exports = function (passport, config) {
   })
 
   // use local strategy
-  passport.use('local',new LocalStrategy({
+  passport.use('local-signup',new LocalStrategy({
   		usernameField: 'email',
   		passwordField: 'password',
   		passReqToCallback: true // allows us to pass back the entire request to the callback
@@ -30,6 +36,7 @@ module.exports = function (passport, config) {
   			if (err) {
   				return done(err)
   			}
+			
             console.log("hello");
   			return done(null, user)
   		})
@@ -40,7 +47,7 @@ module.exports = function (passport, config) {
   
   
   // use local strategy handle login
-  passport.use(new LocalStrategy({
+  passport.use('local-login',new LocalStrategy({
       usernameField: 'email',
       passwordField: 'password',
 	  passReqToCallback: true // allows us to pass back the entire request to the callback
