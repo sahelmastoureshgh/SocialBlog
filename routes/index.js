@@ -1,19 +1,20 @@
 var userController = require('../controller/userController')
+var postsController = require('../controller/postsController')
 
 module.exports = function(app) {
-	
-    app.get('/', userController.signup)
+	app.get('/',postsController.show);
+    app.get('/signup', userController.signup)
 	app.post('/signup', passport.authenticate('local-signup', {
-		successRedirect : '/welcome', // redirect to the secure profile section
+		successRedirect : '/login', // redirect to the secure profile section
 		failureRedirect : '/error', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
 	}));
 	app.post('/login', passport.authenticate('local', {
-		successRedirect : '/welcome', // redirect to the secure profile section
+		successRedirect : '/login', // redirect to the secure profile section
 		failureRedirect : '/error', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
 	}));
-	app.get('/welcome', userController.welcome)
+	app.get('/login', userController.login)
 	app.get('/error', userController.error)
 	
 }

@@ -65,6 +65,9 @@ exports.signup = function (req, res) {
 // welcome page
 exports.login = function (req, res) {
 	console.log(req.session);
+	console.log("sahel is testing");
+	console.log(req.isAuthenticated());
+	
     res.render('login');
 
  

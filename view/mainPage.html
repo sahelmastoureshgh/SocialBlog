@@ -1,0 +1,39 @@
+<p>
+	{% extends 'layout.html' %} {% block head %} {% parent %} {% endblock %} {% block content %}
+</p>
+		<nav class="navbar navbar-inverse">
+  			<div class="container-fluid">
+    			<div class="navbar-header">
+      				<a class="navbar-brand" href="#">MyWebsite</a>
+    			</div>
+
+    			<div>
+      			
+      				<ul class="nav navbar-nav navbar-right">
+      					<li><a href="signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      					<li><a href="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      				</ul>
+    			</div>
+  			</div>
+		</nav>
+	
+		<div class="container">
+			<div class="jumbotron">
+				<h1>Hello, welcome to my website!</h1>
+				<p>Coming soon!</p>
+				<a href="#" class="btn btn-primary btn-lg">More Detail <span class="glyphicon glyphicon-chevron-right"></span></a>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<p>post by people goes here</p>
+				</div>
+
+			</div>
+		</div>
+<p>
+	{% endblock %}
+</p>
+		
