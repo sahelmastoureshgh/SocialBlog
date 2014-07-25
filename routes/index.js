@@ -10,7 +10,7 @@ module.exports = function(app) {
 		failureFlash : true // allow flash messages
 	}));
 	app.get('/login', userController.login)
-	app.post('/login', passport.authenticate('local', {
+	app.post('/login', passport.authenticate('local-login', {
 		successRedirect : '/login', // redirect to the secure profile section
 		failureRedirect : '/error', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
