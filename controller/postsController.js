@@ -36,3 +36,22 @@ exports.show=function(req,res){
 	res.render('mainPage');
 	
 }
+/**
+ show new post template
+**/
+exports.newPost = function (req, res) {
+	
+    res.render('newPost',{
+    posts: new Posts({}) });
+
+ 
+}
+/**
+ Create new post
+**/
+exports.createPost = function (req, res) {
+	
+    console.log(req.body);
+
+ 
+}

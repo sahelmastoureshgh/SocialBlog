@@ -15,6 +15,8 @@ module.exports = function(app) {
 		failureRedirect : '/error', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
 	}));
+	app.get('/newPost', postsController.newPost)
+	app.post('/newPost', postsController.createPost)
 	
 	app.get('/error', userController.error)
 	
